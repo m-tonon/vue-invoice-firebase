@@ -248,7 +248,14 @@ export default {
     closeInvoice() {
       this.TOOGLE_INVOICE();
     },
-  }
+  },
+  watch: {
+    paymentTerms() {
+      const futureDate = new Date();
+      this.paymentDueDateUnix = futureDate.setDate(futureDate.getDate() + parseInt(this.paymentTerms));
+      this.paymentDueDate = new Date(this.paymentDueDateUnix).toLocaleDateString('en-us', this.dateOptions);
+    }
+  },
 };
 </script>
 
