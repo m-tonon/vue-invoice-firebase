@@ -155,6 +155,7 @@
                 ${{ (item.total = item.qty * item.price) }}
               </td>
               <img
+                class="delete-item"
                 @click="deleteInvoiceItem(item.id)"
                 src="@/assets/icon-delete.svg"
               />
@@ -203,6 +204,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import { uid } from 'uid';
 
 export default {
   name: 'invoiceModal',
@@ -247,6 +249,20 @@ export default {
 
     closeInvoice() {
       this.TOOGLE_INVOICE();
+    },
+
+    addNewInvoiceItem() {
+      this.invoiceItemList.push({
+        id: uid(),
+        itemName: '',
+        qty: '',
+        price: 0,
+        total: 0
+      })
+    },
+
+    deleteInvoiceItem(id) {
+      this.invoiceItemList = this.invoiceItemList.filter(item => item.id !== id);
     },
   },
   watch: {
@@ -389,6 +405,10 @@ export default {
             margin-right: 4px;
           }
         }
+      }
+
+      .delete-item {
+        cursor: pointer;
       }
     }
 
