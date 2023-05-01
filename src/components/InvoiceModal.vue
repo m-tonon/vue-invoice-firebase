@@ -232,7 +232,7 @@ export default {
   },
   methods: {
     ...mapMutations(['TOOGLE_INVOICE']),
-    
+
     closeInvoice() {
       this.TOOGLE_INVOICE();
     },
@@ -249,6 +249,10 @@ export default {
   width: 100%;
   height: 100vh;
   overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media (min-width: 900px) {
     left: 90px;
