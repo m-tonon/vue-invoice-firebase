@@ -208,6 +208,11 @@ export default {
   name: 'invoiceModal',
   data() {
     return {
+      dateOptions: {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      },
       billerStreetAddress: null,
       billerCity: null,
       billerZipCode: null,
@@ -229,6 +234,13 @@ export default {
       invoiceItemList: [],
       invoiceTotal: 0,
     };
+  },
+  created() {
+    
+    // get current date for invoice date field
+    this.invoiceDateUnix = Date.now();
+    this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString('en-us', this.dateOptions);
+    
   },
   methods: {
     ...mapMutations(['TOOGLE_INVOICE']),
