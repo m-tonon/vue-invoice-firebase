@@ -3,7 +3,9 @@
     <div v-if="!mobile" class="app flex flex-column">
       <Navigation />
       <div class="app-content flex flex-column">
-        <InvoiceModal />
+        <transition name="invoice">
+        <InvoiceModal v-if="invoiceModal" />
+        </transition>
         <router-view />
       </div>
     </div>
@@ -15,6 +17,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Navigation from './components/Navigation.vue';
 import InvoiceModal from './components/InvoiceModal.vue';
 
@@ -42,6 +45,9 @@ export default {
       }
       this.mobile = false;
     }
+  },
+  computed: {
+    ...mapState(['invoiceModal'])
   }
 }
 </script>
@@ -81,6 +87,18 @@ export default {
   p {
     margin-top: 16px;
   }
+}
+
+// Animated Invoice
+
+.invoice-enter-active,
+.invoice-leave-active {
+  transition: 0.8s ease-in-out;
+}
+
+.invoice-enter-from,
+.invoice-leave-to {
+  transform: translateX(-700px);
 }
 
 button,
