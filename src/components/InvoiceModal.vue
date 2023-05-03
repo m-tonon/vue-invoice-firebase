@@ -203,6 +203,8 @@
 </template>
 
 <script>
+import db from '../firebase/firebase-init';
+import { doc, setDoc } from "firebase/firestore";
 import { mapMutations } from 'vuex';
 import { uid } from 'uid';
 
@@ -264,6 +266,63 @@ export default {
     deleteInvoiceItem(id) {
       this.invoiceItemList = this.invoiceItemList.filter(item => item.id !== id);
     },
+
+    calcInvoiceTotal() {
+      this.invoiceTotal = 0;
+      this.invoiceItemList.forEach(item => {
+        this.invoiceTotal += item.total;
+      });
+    },
+
+    publishInvoice () {
+      this.invoicePending = true;
+    },
+
+    saveDraft() {
+      this.invoiceDraft = true;
+    },
+
+    async uploadInvoice() {
+      if (this.invoiceItemList.length <= 0) {
+        alert('Please ensure you filled out work items!');
+        return;
+      }
+
+      this.calcInvoiceTotal();
+
+      const dataBase = doc(db, 'invoices', uid(6));
+
+      await setDoc(dataBase, {
+      billerStreetAddress: this.billerStreetAddress,
+      billerCity: this.billerCity,
+      billerZipCode: this.billerZipCode,
+      billerCountry: this.billerCountry,
+      clientName: this.clientName,
+      clientEmail: this.clientEmail,
+      clientStreetAddress: this.clientStreetAddress,
+      clientCity: this.clientCity,
+      clientZipCode: this.clientZipCode,
+      clientCountry: this.clientCountry,
+      invoiceDate: this.invoiceDate,
+      invoiceDateUnix: this.invoiceDateUnix,
+      paymentTerms: this.paymentTerms,
+      paymentDueDate: this.paymentDueDate,
+      paymentDueDateUnix: this.paymentDueDateUnix,
+      productDescription: this.productDescription,
+      invoiceItemList: this.invoiceItemList,
+      invoiceTotal: this.invoiceTotal,
+      invoicePending: this.invoicePending,
+      invoiceDraft: this.invoiceDraft,
+      invoicePaid: null,
+      })
+
+      this.TOOGLE_INVOICE();
+    },
+
+    submitForm() {
+      this.uploadInvoice();
+    }
+
   },
   watch: {
     paymentTerms() {
