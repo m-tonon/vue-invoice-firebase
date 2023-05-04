@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!mobile" class="app flex flex-column">
+    <div class="app flex flex-column">
       <Navigation />
       <div class="app-content flex flex-column">
         <transition name="invoice">
@@ -9,10 +9,10 @@
         <router-view />
       </div>
     </div>
-    <div v-else class="mobile-message flex flex-column">
+    <!-- <div v-else class="mobile-message flex flex-column">
       <h2>Sorry, this app is not supported on Mobile Devices.</h2>
       <p>To use this app, please use a computer or Tablet</p>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -20,6 +20,7 @@
 import { mapState } from 'vuex';
 import Navigation from './components/Navigation.vue';
 import InvoiceModal from './components/InvoiceModal.vue';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default {
   data() {

@@ -2,9 +2,12 @@
   <div
     @click="checkClick"
     ref="invoiceWrap"
-    class="invoice-wrap flex flex-column"
+    class="invoice-wrap flex flex-column position-fixed pt-5"
+    
   >
-    <form @submit.prevent="submitForm" class="invoice-content">
+    <form @submit.prevent="submitForm" 
+    class="invoice-content"
+    :class="isMobile ? 'mw-100 w-100' : ''">
       <h1>New Invoice</h1>
 
       <!-- Bill From -->
@@ -19,7 +22,10 @@
             v-model="billerStreetAddress"
           />
         </div>
-        <div class="location-details flex">
+        <div 
+        class="location-details"
+        :class="isMobile ? '' : 'flex'"
+        >
           <div class="input flex flex-column">
             <label for="billerCity">City</label>
             <input required type="text" id="billerCity" v-model="billerCity" />
@@ -65,7 +71,8 @@
             v-model="clientStreetAddress"
           />
         </div>
-        <div class="location-details flex">
+        <div class="location-details"
+        :class="isMobile ? '' : 'flex'">
           <div class="input flex flex-column">
             <label for="clientCity">City</label>
             <input required type="text" id="clientCity" v-model="clientCity" />
@@ -170,18 +177,21 @@
       </div>
 
       <!-- Save/Exit -->
-      <div class="save flex">
-        <div class="left">
+      <div class="save flex"
+      :class="isMobile ? 'flex-column' : ''">
+        <div class="left"
+        :class="isMobile ? 'flex flex-column pb-4' : ''">
           <button type="button" @click="closeInvoice" class="red">
             Cancel
           </button>
         </div>
-        <div class="right flex">
+        <div class="right flex"
+        :class="isMobile ? 'flex-column' : ''">
           <button
             v-if="!editInvoice"
             type="submit"
             @click="saveDraft"
-            class="dark-purple"
+            class="dark-purple mb-4"
           >
             Save Draft
           </button>
@@ -189,7 +199,7 @@
             v-if="!editInvoice"
             type="submit"
             @click="publishInvoice"
-            class="purple"
+            class="purple mb-4"
           >
             Create Invoice
           </button>
@@ -237,6 +247,7 @@ export default {
       invoiceDraft: null,
       invoiceItemList: [],
       invoiceTotal: 0,
+      isMobile: false,
     };
   },
   created() {
@@ -251,6 +262,10 @@ export default {
 
     closeInvoice() {
       this.TOOGLE_INVOICE();
+    },
+
+    mobileView() {
+      return this.isMobile = !this.isMobile;
     },
 
     addNewInvoiceItem() {
@@ -353,7 +368,7 @@ export default {
   }
 
   .invoice-content {
-    position: relative;
+    // position: relative;
     padding: 56px;
     max-width: 700px;
     width: 100%;

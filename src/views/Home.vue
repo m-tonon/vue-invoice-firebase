@@ -92,6 +92,7 @@ export default {
           width: 120px;
           position: absolute;
           top: 25px;
+          padding: 0;
           list-style: none;
           background-color: #1e2139;
           box-shadow: 0px 4 6px -1px rgba(0, 0, 0, 0.1),
