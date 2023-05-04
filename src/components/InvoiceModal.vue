@@ -247,8 +247,14 @@ export default {
       invoiceDraft: null,
       invoiceItemList: [],
       invoiceTotal: 0,
-      isMobile: false,
+      // isMobile: false,
     };
+  },
+  props: {
+    isMobile: {
+     type: Boolean,
+      required: true
+  }
   },
   created() {
     
@@ -262,10 +268,6 @@ export default {
 
     closeInvoice() {
       this.TOOGLE_INVOICE();
-    },
-
-    mobileView() {
-      return this.isMobile = !this.isMobile;
     },
 
     addNewInvoiceItem() {
