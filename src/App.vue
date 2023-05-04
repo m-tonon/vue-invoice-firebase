@@ -8,7 +8,7 @@
             v-if="invoiceModal"
             :isMobile="mobile" />
         </transition>
-        <router-view />
+        <router-view :isMobile="mobile" />
       </div>
     </div>
     <!-- <div v-else class="mobile-message flex flex-column">

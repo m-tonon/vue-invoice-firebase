@@ -7,7 +7,9 @@
         <span>There are 4 total invoices</span>
       </div>
       <div class="right flex">
-        <div @click="toogleFilterMenu" class="filter flex">
+        <div @click="toogleFilterMenu" 
+          class="filter flex position-relative"
+          :class="isMobile ? '' : ''">
           <span>Filter by status</span>
           <img src="@/assets/icon-arrow-down.svg" alt="" />
           <ul v-show="filterMenu" class="filter-menu">
@@ -37,6 +39,12 @@ export default {
     return {
       filterMenu: null,
     };
+  },
+  props: {
+    isMobile: {
+      type: Boolean,
+      required: true,
+    },
   },
   components: {},
   methods: {
@@ -78,7 +86,7 @@ export default {
       }
 
       .filter {
-        position: relative;
+        z-index: 0;
         margin-right: 40px;
         cursor: pointer;
 
